@@ -6,12 +6,12 @@ document.body.appendChild(canvas);
 
 // Cargar imágenes
 const personajeImg = new Image();
-personajeImg.src = "personaje.png"; // Tu personaje nuevo
+personajeImg.src = "personaje.png"; // Tu personaje
 
 const piedraImg = new Image();
-piedraImg.src = "piedra.png"; // Objeto nuevo
+piedraImg.src = "piedra.png"; // Obstáculo nuevo
 
-// Variables del personaje
+// Datos del personaje
 let personaje = {
     x: 50,
     y: 300,
@@ -22,7 +22,7 @@ let personaje = {
     enElSuelo: true
 };
 
-// Variables de la piedra
+// Datos de la piedra
 let piedra = {
     x: 800,
     y: 300,
@@ -31,17 +31,28 @@ let piedra = {
     velocidad: 6
 };
 
-// Puntuación
+// Puntos
 let puntos = 0;
 
-// Evento de salto
-document.addEventListener("keydown", function (e) {
-    if ((e.code === "Space" || e.code === "ArrowUp") && personaje.enElSuelo) {
+// SALTAR con teclado y con pantalla táctil
+function saltar() {
+    if (personaje.enElSuelo) {
         personaje.velocidadY = -25;
         personaje.enElSuelo = false;
     }
+}
+
+document.addEventListener("keydown", function (e) {
+    if (e.code === "Space" || e.code === "ArrowUp") {
+        saltar();
+    }
 });
 
+document.addEventListener("touchstart", function () {
+    saltar();
+});
+
+// Detectar colisión
 function detectarColision(p, o) {
     return (
         p.x < o.x + o.width &&
@@ -51,19 +62,19 @@ function detectarColision(p, o) {
     );
 }
 
-// Game loop
+// Bucle principal del juego
 function actualizar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Fondo rosado
-    ctx.fillStyle = "#f4a6b3";
+    ctx.fillStyle = "#ffd6e0";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Piso
-    ctx.fillStyle = "#44c767";
+    ctx.fillStyle = "#38b000";
     ctx.fillRect(0, 350, canvas.width, 50);
 
-    // Gravedad
+    // Gravedad y movimiento
     personaje.y += personaje.velocidadY;
     personaje.velocidadY += personaje.gravedad;
 
@@ -87,7 +98,7 @@ function actualizar() {
     ctx.drawImage(piedraImg, piedra.x, piedra.y, piedra.width, piedra.height);
 
     // Mostrar puntos
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#000";
     ctx.font = "20px Arial";
     ctx.fillText("Puntos: " + puntos, 680, 30);
 
