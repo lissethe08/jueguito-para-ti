@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Jueguito para ti 💗</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jueguito para Mili 💖</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <audio id="bgMusic" autoplay loop>
-    <source src="musica.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio HTML5.
-  </audio>
-
-  <h1>Este jueguito te lo hice solo para ti 💗</h1>
-  <button onclick="startGame()" id="startButton">Iniciar juego de Mili 🌵</button>
-
-  <div id="game" style="display: none;">
-    <div id="score">0</div>
-    <img src="personaje.png" class="character" id="character">
-    <img src="cactus.png" class="obstacle" id="obstacle">
+  <h1>Este jueguito es solo para ti Mili 💖</h1>
+  <div id="juego">
+    <img id="personaje" src="personaje.png" />
+    <div id="suelo"></div>
   </div>
-
+  <div id="contador">Puntos: 0</div>
   <script src="script.js"></script>
 </body>
 </html>
