@@ -2,16 +2,27 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Jueguito para ti 💖</title>
+  <title>Jueguito para ti 💗</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Este jueguito te lo hice solo para ti 💕</h1>
-  <div class="game">
-    <img src="personaje.png" class="character" id="character">
+  <h1>Este jueguito te lo hice solo para ti 💗</h1>
+
+  <button onclick="startGame()" id="startButton">Iniciar juego de Mili</button>
+
+  <div id="game" style="display: none;">
+    <img src="personaje_bn_fondo.png" class="character" id="character">
     <img src="cactus.png" class="obstacle" id="obstacle">
   </div>
+
+  <script>
+    function startGame() {
+      document.getElementById("startButton").style.display = "none";
+      document.getElementById("game").style.display = "block";
+    }
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>
