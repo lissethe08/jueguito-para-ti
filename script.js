@@ -1,21 +1,48 @@
-const character = document.getElementById("character");
-const obstacle = document.getElementById("obstacle");
+let character = document.getElementById("character");
+let obstacle = document.getElementById("obstacle");
+let scoreDisplay = document.getElementById("score");
+let gameInterval;
+let score = 0;
 
-document.addEventListener("click", () => {
-  if (!character.classList.contains("jump")) {
-    character.classList.add("jump");
-    setTimeout(() => {
-      character.classList.remove("jump");
-    }, 500);
+function startGame() {
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("game").style.display = "block";
+  document.getElementById("bgMusic").play();
+  obstacle.style.right = "-60px";
+  moveObstacle();
+  gameInterval = setInterval(updateScore, 1000);
+}
+
+function moveObstacle() {
+  let obstacleX = -60;
+  function animate() {
+    if (obstacleX > window.innerWidth) {
+      obstacleX = -60;
+    } else {
+      obstacleX += 5;
+    }
+    obstacle.style.right = obstacleX + "px";
+    detectCollision();
+    requestAnimationFrame(animate);
   }
-});
+  animate();
+}
 
-setInterval(() => {
-  const characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
-  const obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("right"));
+function updateScore() {
+  score++;
+  scoreDisplay.textContent = score;
+}
 
-  // Ajusta la colisión según el tamaño de tu personaje/obstáculo
-  if (obstacleLeft > 300 && obstacleLeft < 360 && characterTop < 50) {
-    alert("¡Te chocaste! 😵 Vuelve a intentarlo");
+function detectCollision() {
+  let characterRect = character.getBoundingClientRect();
+  let obstacleRect = obstacle.getBoundingClientRect();
+  if (
+    characterRect.right > obstacleRect.left &&
+    characterRect.left < obstacleRect.right &&
+    characterRect.bottom > obstacleRect.top
+  ) {
+    alert("¡Te chocaste! 😢 Vuelve a intentarlo");
+    clearInterval(gameInterval);
+    location.reload();
   }
-}, 10);
+}
