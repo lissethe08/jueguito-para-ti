@@ -1,48 +1,52 @@
-let character = document.getElementById("character");
-let obstacle = document.getElementById("obstacle");
-let scoreDisplay = document.getElementById("score");
-let gameInterval;
-let score = 0;
-
-function startGame() {
-  document.getElementById("startButton").style.display = "none";
-  document.getElementById("game").style.display = "block";
-  document.getElementById("bgMusic").play();
-  obstacle.style.right = "-60px";
-  moveObstacle();
-  gameInterval = setInterval(updateScore, 1000);
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffd4ec;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  color: #b20069;
 }
 
-function moveObstacle() {
-  let obstacleX = -60;
-  function animate() {
-    if (obstacleX > window.innerWidth) {
-      obstacleX = -60;
-    } else {
-      obstacleX += 5;
-    }
-    obstacle.style.right = obstacleX + "px";
-    detectCollision();
-    requestAnimationFrame(animate);
-  }
-  animate();
+#juego {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  border-top: 2px dashed #fff;
+  border-bottom: 2px dashed #fff;
 }
 
-function updateScore() {
-  score++;
-  scoreDisplay.textContent = score;
+#personaje {
+  position: absolute;
+  bottom: 40px;
+  left: 50px;
+  width: 100px; /* más grande */
+  image-rendering: pixelated;
 }
 
-function detectCollision() {
-  let characterRect = character.getBoundingClientRect();
-  let obstacleRect = obstacle.getBoundingClientRect();
-  if (
-    characterRect.right > obstacleRect.left &&
-    characterRect.left < obstacleRect.right &&
-    characterRect.bottom > obstacleRect.top
-  ) {
-    alert("¡Te chocaste! 😢 Vuelve a intentarlo");
-    clearInterval(gameInterval);
-    location.reload();
-  }
+.saltar {
+  animation: salto 0.5s ease;
+}
+
+@keyframes salto {
+  0% { bottom: 40px; }
+  50% { bottom: 150px; }
+  100% { bottom: 40px; }
+}
+
+#suelo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #38b000; /* verde pasto */
+  image-rendering: pixelated;
+}
+
+#contador {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 18px;
 }
